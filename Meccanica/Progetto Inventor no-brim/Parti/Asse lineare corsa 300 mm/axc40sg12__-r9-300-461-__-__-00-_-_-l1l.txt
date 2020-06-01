@@ -1,0 +1,13 @@
+﻿"Symbol";"Value";"Unit";
+"TraceParts.PartNumber";"32-15042009-081775";"";
+"REFERENCE";"AXC40SG12__-R9-300-461-__-__-00-_-_";"";
+"TraceParts.PartTitle";"02 - asse lineare con transmissione a vite e guida a ricircolo di sfere AXC40-S";"";
+"TraceParts.InstanceId";"32-15042009-0817752JS3SDS5NK9W6X5NKLHCUIRSQ";"";
+"DESIGN";"02 - asse lineare con transmissione a vite e guida a ricircolo di sfere AXC40-S";"";
+"TraceParts.PartStatus";"Published";"";
+"TraceParts.PartStatusId";"";"";
+"SUPPLIER";"NADELLA";"";
+"TraceParts.PartVersion";"1.1.4";"";
+"TRACEPARTS";"TRACEPARTS";"";
+"TraceParts.PartLanguage";"it";"";
+"TraceParts.ClassPath";"NADELLA:32-15042009-081775";"";
