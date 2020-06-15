@@ -1,8 +1,28 @@
 #include "task.cpp"
 #include "piston.cpp"
 #include "CPUload.cpp"
+#include "PID.cpp"
 
 //TODO define inputs
+//!Definizione input
+#define 1B1
+#define 1B2
+#define 2B1
+#define 2B2
+#define 3B1
+#define 3B2
+#define 4B1
+#define 4B2
+#define B1
+#define B2
+#define EM1
+
+//!Definizione output
+#define 1M1
+#define 2M1
+#define 3M1
+#define 3M2
+#define 4M1
 
 //!Lista dei task
 enum taskIndex {
@@ -28,6 +48,7 @@ enum pistonIndex {
 struct TaskStruct tasks[TASK_MAX];
 struct measureTimingStruct measureTiming;
 struct PistonStruct pistons[PIST_MAX];
+struct PID PIDasse;
 
 int function_taskIntegrity(void);
 int function_taskPID(void);
@@ -41,6 +62,8 @@ void setup () {
   tasks[TASK_SFC].init(20);
   tasks[TASK_UI].init(20);
   tasks[TASK_SERIAL].init(10);
+
+  PIDasse.init(1,1,1);
   Serial.begin(38400);
 
   // TODO Inizializzazione I/O
