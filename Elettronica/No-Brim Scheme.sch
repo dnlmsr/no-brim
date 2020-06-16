@@ -4,11 +4,11 @@ EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
 Sheet 1 1
-Title ""
-Date ""
+Title "No-Brim project"
+Date "2020-06-16"
 Rev ""
-Comp ""
-Comment1 ""
+Comp "AFP 2019-2020"
+Comment1 "Schema elettrico scheda per Arduino"
 Comment2 ""
 Comment3 ""
 Comment4 ""
@@ -972,17 +972,28 @@ Text GLabel 4950 5100 0    50   Input ~ 0
 3M1_2
 Text GLabel 3950 6600 0    50   Input ~ 0
 4M1_1
+Wire Wire Line
+	3950 5450 3950 5550
 $Comp
-L No-Brim-Scheme-rescue:Conn_01x09-Connector_Generic J1
-U 1 1 5EF873A9
+L Connector_Generic:Conn_01x10 J1
+U 1 1 5EE90DB9
 P 950 1400
-F 0 "J1" H 868 775 50  0000 C CNN
-F 1 "Conn_01x09" H 868 866 50  0000 C CNN
-F 2 "Connector_PinSocket_2.54mm:PinSocket_1x09_P2.54mm_Vertical" H 950 1400 50  0001 C CNN
+F 0 "J1" H 1030 1392 50  0000 L CNN
+F 1 "Conn_01x10" H 1030 1301 50  0000 L CNN
+F 2 "Connector_PinSocket_2.54mm:PinSocket_1x10_P2.54mm_Vertical" H 950 1400 50  0001 C CNN
 F 3 "~" H 950 1400 50  0001 C CNN
 	1    950  1400
 	-1   0    0    -1  
 $EndComp
-Wire Wire Line
-	3950 5450 3950 5550
+$Comp
+L No-Brim-Scheme-rescue:GND-power #PWR0101
+U 1 1 5EE9BC2F
+P 1150 1900
+F 0 "#PWR0101" H 1150 1650 50  0001 C CNN
+F 1 "GND-power" H 1155 1727 50  0000 C CNN
+F 2 "" H 1150 1900 50  0001 C CNN
+F 3 "" H 1150 1900 50  0001 C CNN
+	1    1150 1900
+	1    0    0    -1  
+$EndComp
 $EndSCHEMATC
