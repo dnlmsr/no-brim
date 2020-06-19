@@ -1,6 +1,16 @@
 /*******************************
  * \mainpage no-brim
- * 
+ * \section Introduzione
+ * no-brim è il progetto di una macchina atta al taglio
+ * automatico di tubi in PVC o altri materiali plastici.
+ * \section Codice
+ * Il codice è stato realizzato con un sistema a task, dove ogni
+ * task esegue una funzione specifica come il controllo degli
+ * I/O oppure del ciclogramma.
+ *
+ * \authors Daniele Moser <mailto:dnlmsr0@gmail.com>
+ * \authors Francesco Maraner <mailto:francesco.maraner@marconirovereto.it>
+ * \authors Michele Mattè <mailto:michele.matte@marconirovereto.it>
  *******************************/
 
 #include "task.cpp"
@@ -30,18 +40,20 @@
 #define I_EMG 17 ///< Pulsante di emergenza.
 
 //Definizione output
-#define O_1M1 18
-#define O_2M1 19
-#define O_3M1 20
-#define O_3M2 21
-#define O_4M1 22
-#define O_M1 23
-#define O_M2 24
+#define O_1M1 18 ///< Output valvola 1M1
+#define O_2M1 19 ///< Output valvola 2M1
+#define O_3M1 20 ///< Output valvola 3M1
+#define O_3M2 21 ///< Output valvola 3M2
+#define O_4M1 22 ///< Output valvola 4M1
+#define O_M1 23 ///< Output motore asse lineare M1
+#define O_M2 24 ///< Output motore lama M2
 
 //Definizione variabili globali
-int SFCstate; ///<Variabile di stato del sistema.
-int SFCerror; ///<Variabile errore del sistema.
-int V_EM1; ///<Valore encoder motore M1.
+int SFCstate; ///< Variabile di stato del sistema.
+int SFCerror; ///< Variabile errore del sistema.
+int V_EM1; ///< Valore encoder motore M1.
+int cuttingMeasure; ///< Misura taglio del tubo.
+int cuttingRemaining; ///< Rimanenza spostamento del tubo.
 
 /// Lista dei task.
 enum taskIndex {
@@ -104,6 +116,9 @@ void setup () {
   pistons[PIST_2M1].init(O_2M1,0,I_2B2,I_2B1);
   pistons[PIST_3MX].init(O_3M1,O_3M2,I_3B1,I_3B2);
   pistons[PIST_4M1].init(O_4M1,0,I_4B1,I_4B2);
+
+  cuttingMeasure = 750;
+  cuttingRemaining = cuttingMeasure;
 }
 
 
@@ -155,7 +170,12 @@ int function_taskSFC () {
     if (digitalRead(I_START)){
       SFCstate=SFC_CALIBRATION;
       SFCerror=0;
-      PIDasse.setSetPoint(MIN_M1_VALUE);
+
+      int movingMeasure;
+      if (cuttingRemaining >= MAX_M1_VALUE) movingMeasure = MAX_M1_VALUE;
+      else movingMeasure = cuttingRemaining;
+      cuttingRemaining -= movingMeasure;
+      PIDasse.setSetPoint(MAX_M1_VALUE);
     }
     break;
 
@@ -186,12 +206,12 @@ int function_taskSFC () {
     pistons[PIST_1M1].extend();
     if (pistons[PIST_2M1].retractionState && pistons[PIST_1M1].extensionState){
       SFCstate=SFC_MOVE_FRONT;
-      PIDasse.setSetPoint(MAX_M1_VALUE);
+      PIDasse.setSetPoint(MIN_M1_VALUE);
     }
     break;
 
     /** Stato movimentazione in avanti.
-     * L'asse si muove in avanti fino a raggiungere
+     * L'asse si muove verso la lama fino a raggiungere
      * la fine della sua corsa.
      */
   case SFC_MOVE_FRONT:
@@ -207,7 +227,15 @@ int function_taskSFC () {
   case SFC_STOP_TUBE:
     pistons[PIST_2M1].extend();
     if (pistons[PIST_2M1].extensionState){
-      SFCstate= SFC_CUT;
+      if (cuttingRemaining == 0) SFCstate= SFC_CUT;
+      else {
+        int movingMeasure;
+        if (cuttingRemaining >= MAX_M1_VALUE) movingMeasure = MAX_M1_VALUE;
+        else movingMeasure = cuttingRemaining;
+        cuttingRemaining -= movingMeasure;
+        PIDasse.setSetPoint(movingMeasure);
+        SFCstate=SFC_CALIBRATION;
+      }
     }
     break;
 
