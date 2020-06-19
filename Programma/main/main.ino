@@ -1,30 +1,35 @@
+/*******************************
+ * \mainpage no-brim
+ * 
+ *******************************/
+
 #include "task.cpp"
 #include "piston.cpp"
 #include "CPUload.cpp"
 #include "PID.cpp"
 
-#define MAX_M1_VALUE 0
-#define MIN_M1_VALUE 500
+#define MAX_M1_VALUE 0 ///< Valore minimo asse lineare.
+#define MIN_M1_VALUE 500 ///< Valore massimo asse lineare.
 
-//!Definizione input
-#define I_1B1 2
-#define I_1B2 3
-#define I_2B1 4
-#define I_2B2 5
-#define I_3B1 6
-#define I_3B2 7
-#define I_4B1 8
-#define I_4B2 9
-#define I_B1 10
-#define I_B2 11
-#define I_B3 12
-#define I_EM1 13 //encoder motore
-#define I_START 14
-#define I_STOP 15
-#define I_RESET 16
-#define I_EMG 17
+//Definizione input
+#define I_1B1 2 ///< Finecorsa 1M1 retratto.
+#define I_1B2 3 ///< Finecorsa 1M1 esteso.
+#define I_2B1 4 ///< Finecorsa 2M1 retratto.
+#define I_2B2 5 ///< Finecorsa 2M1 esteso.
+#define I_3B1 6 ///< Finecorsa 3MX retratto.
+#define I_3B2 7 ///< Finecorsa 3MX esteso.
+#define I_4B1 8 ///< Finecorsa 4M1 retratto.
+#define I_4B2 9 ///< Finecorsa 4M1 esteso.
+#define I_B1 10 ///< Sensore di presenza B1.
+#define I_B2 11 ///< Sensore di presenza B2.
+#define I_B3 12 ///< Sensore di presenza B3.
+#define I_EM1 13 ///< Encoder motore M1.
+#define I_START 14 ///< Pulsante START.
+#define I_STOP 15 ///< Pulsante STOP.
+#define I_RESET 16 ///< Pulsante RESET.
+#define I_EMG 17 ///< Pulsante di emergenza.
 
-//!Definizione output
+//Definizione output
 #define O_1M1 18
 #define O_2M1 19
 #define O_3M1 20
@@ -33,13 +38,12 @@
 #define O_M1 23
 #define O_M2 24
 
-//!Definizione variabili globali
-int SFCstate; //!<Variabile di stato del sistema
-bool SFCauto;
-int SFCerror;
-int V_EM1;
+//Definizione variabili globali
+int SFCstate; ///<Variabile di stato del sistema.
+int SFCerror; ///<Variabile errore del sistema.
+int V_EM1; ///<Valore encoder motore M1.
 
-//!Lista dei task
+/// Lista dei task.
 enum taskIndex {
                 TASK_INTEGRITY,
                 TASK_PID,
@@ -49,7 +53,7 @@ enum taskIndex {
                 TASK_MAX,
 };
 
-//!Lista dei pistoni
+/// Lista dei pistoni.
 enum pistonIndex {
                   PIST_1M1,
                   PIST_2M1,
@@ -58,7 +62,7 @@ enum pistonIndex {
                   PIST_MAX,
 };
 
-//!Lista degli stati SFC
+/// Lista degli stati SFC.
 enum SFCstates {
                 SFC_EMERGENCY,
                 SFC_STOP,
@@ -96,8 +100,8 @@ void setup () {
   SFCstate = 0;
   // TODO Inizializzazione I/O
 
-  pistons[PIST_1M1].init(O_1M1,0,I_1B1,I_1B2);
-  pistons[PIST_2M1].init(O_2M1,0,I_1B2,I_1B1);
+  pistons[PIST_1M1].init(O_1M1,0,I_1B2,I_1B1);
+  pistons[PIST_2M1].init(O_2M1,0,I_2B2,I_2B1);
   pistons[PIST_3MX].init(O_3M1,O_3M2,I_3B1,I_3B2);
   pistons[PIST_4M1].init(O_4M1,0,I_4B1,I_4B2);
 }
@@ -110,13 +114,9 @@ void loop () {
   long timeNow = millis();
 
   if (tasks[TASK_INTEGRITY].toDoTask(timeNow)) function_taskIntegrity();
-
   if (tasks[TASK_PID].toDoTask(timeNow)) function_taskPID();
-
   if (tasks[TASK_SFC].toDoTask(timeNow)) function_taskSFC();
-
   if (tasks[TASK_UI].toDoTask(timeNow)) function_taskUI();
-
   if (tasks[TASK_SERIAL].toDoTask(timeNow)) function_taskSerial();
 
   measureTiming.endMeasure(micros());
@@ -124,41 +124,63 @@ void loop () {
 
 int function_taskIntegrity () {}
 int function_taskPID () {}
+
+/**Funzione degli stati macchina (SFC).
+ *La funzione contiene il programma della macchina
+ *in un codice che descrive i vari stati e le transizioni
+ */
 int function_taskSFC () {
   switch(SFCstate){
 
-  case SFC_EMERGENCY: //< Arresto di emergenza
+    /**Stato di emergenza.
+     *Tutti i pistoni sono spenti. La transizione richiede
+     *la pressione del pulsante RESET per passare allo
+     *stato di stop.
+     */
+  case SFC_EMERGENCY:
     for(byte i = 0; i<PIST_MAX; i++) pistons[i].off();
     if (digitalRead(I_RESET)){
       SFCstate=SFC_STOP;
       SFCerror=0;
-      SFCauto=false;
     }
     break;
 
-  case SFC_STOP: //< Stop
+    /**Stato di stop.
+     *Tutti i pistoni sono spenti. La transizione richiede
+     *la pressione del pulsante START per passare allo stato
+     *di calibrazione della macchina.
+     */
+  case SFC_STOP:
     for(byte i = 0; i<PIST_MAX; i++) pistons[i].off();
-
     if (digitalRead(I_START)){
       SFCstate=SFC_CALIBRATION;
       SFCerror=0;
-      SFCauto=true;
       PIDasse.setSetPoint(MIN_M1_VALUE);
     }
     break;
 
-  case SFC_CALIBRATION: //< Calibrazione
+    /** Stato di calibrazione.
+     * La macchina viene calbrata, ovvero 1M1 e 3MX si ritraggono,
+     * mentre 2M1 e 4M1 si estendono. L'asse lineare si sposta
+     * nella posizione più lontana dalla lama. La transizione
+     * richiede che tutte le movimentazioni siano in posizione per
+     * passare allo stato di preparazione alla movimentazione.
+     */
+  case SFC_CALIBRATION:
     pistons[PIST_2M1].extend();
     pistons[PIST_1M1].retract();
     pistons[PIST_3MX].retract();
     pistons[PIST_4M1].extend();
-    analogWrite(O_M1, PIDasse.compute(V_EM1,millis())); //TODO EM1 value
-
+    analogWrite(O_M1, PIDasse.compute(V_EM1,millis()));
     if (pistons[PIST_2M1].extensionState && pistons[PIST_1M1].retractionState && pistons[PIST_3MX].retractionState && pistons[PIST_2M1].extensionState && PIDasse.setPointReached){
       SFCstate = SFC_MOVE_PREP;
     }
     break;
 
+    /** Stato preparazione movimentazione.
+     * Il pistone 1M1 si estende mentre il pistone 2M1 si ritrae.
+     * La transizione richiede che la pinza movimentata sia in posizione.
+     */
   case SFC_MOVE_PREP:
     pistons[PIST_2M1].retract();
     pistons[PIST_1M1].extend();
@@ -168,6 +190,10 @@ int function_taskSFC () {
     }
     break;
 
+    /** Stato movimentazione in avanti.
+     * L'asse si muove in avanti fino a raggiungere
+     * la fine della sua corsa.
+     */
   case SFC_MOVE_FRONT:
     analogWrite(O_M1, PIDasse.compute(V_EM1,millis()));
     if (PIDasse.setPointReached){
@@ -175,12 +201,22 @@ int function_taskSFC () {
     }
     break;
 
+    /** Stato blocco del tubo.
+     * Viene bloccato il tubo tramite il pistone 2M1.
+     */
   case SFC_STOP_TUBE:
     pistons[PIST_2M1].extend();
     if (pistons[PIST_2M1].extensionState){
       SFCstate= SFC_CUT;
     }
-      break;
+    break;
+
+    /** Stato taglio del tubo.
+     * Il tubo viene tagliato con il motore lama M2 e il
+     * pistone 3MX. La transizione richiede il taglio completo
+     * del tubo, ovvero che il pistone 3MX raggiunga la fine
+     * della sua corsa.
+     */
   case SFC_CUT:
     digitalWrite(O_M2,1);
     pistons[PIST_3MX].extend();
@@ -190,6 +226,11 @@ int function_taskSFC () {
     }
     break;
 
+    /** Stato fine taglio.
+     * La lama viene fermata e il pistone 3MX si ritrae.
+     * La transizione richiede che il pistone 3MX raggiunga
+     * la fine della sua corsa.
+     */
   case SFC_STOP_CUT:
   pistons[PIST_3MX].retract();
   if(pistons[PIST_3MX].retractionState){
@@ -197,6 +238,11 @@ int function_taskSFC () {
   }
     break;
 
+    /** Stato espulsione pezzo.
+     * Il pezzo viene espulso tramite il pistone 4M1.
+     * La transizione richiede che il pistone 4M1 torni
+     * a riposo.
+     */
   case SFC_EXPULSION:
   pistons[PIST_4M1].extend();
   if(pistons[PIST_4M1].extensionState){
@@ -205,7 +251,6 @@ int function_taskSFC () {
   break;
   }
 }
-
 
 
 int function_taskUI () {}
