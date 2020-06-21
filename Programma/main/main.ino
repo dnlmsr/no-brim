@@ -40,13 +40,13 @@
 #define I_EMG 17 ///< Pulsante di emergenza.
 
 //Definizione output
-#define O_1M1 18 ///< Output valvola 1M1
-#define O_2M1 19 ///< Output valvola 2M1
-#define O_3M1 20 ///< Output valvola 3M1
-#define O_3M2 21 ///< Output valvola 3M2
-#define O_4M1 22 ///< Output valvola 4M1
-#define O_M1 23 ///< Output motore asse lineare M1
-#define O_M2 24 ///< Output motore lama M2
+#define O_1M1 18 ///< Output valvola 1M1.
+#define O_2M1 19 ///< Output valvola 2M1.
+#define O_3M1 20 ///< Output valvola 3M1.
+#define O_3M2 21 ///< Output valvola 3M2.
+#define O_4M1 22 ///< Output valvola 4M1.
+#define O_M1 23 ///< Output motore asse lineare M1.
+#define O_M2 24 ///< Output motore lama M2.
 
 //Definizione variabili globali
 int SFCstate; ///< Variabile di stato del sistema.
@@ -57,11 +57,11 @@ int cuttingRemaining; ///< Rimanenza spostamento del tubo.
 
 /// Lista dei task.
 enum taskIndex {
-                TASK_INTEGRITY,
-                TASK_PID,
-                TASK_SFC,
-                TASK_UI,
-                TASK_SERIAL,
+                TASK_INTEGRITY, ///< Task per verificare l'integrità del sistema.
+                TASK_PID, ///< Task di calcolo del PID.
+                TASK_SFC, ///< Task del programma SFC.
+                TASK_UI, ///< Task dell'interfaccia utente per il controllo.
+                TASK_SERIAL, ///< Task gestione della seriale.
                 TASK_MAX,
 };
 
@@ -88,10 +88,10 @@ enum SFCstates {
                 SFC_EXPULSION,
 };
 
-struct TaskStruct tasks[TASK_MAX];
-struct measureTimingStruct measureTiming;
-struct PistonStruct pistons[PIST_MAX];
-struct PID PIDasse;
+struct TaskStruct tasks[TASK_MAX]; ///< Vettore dei task.
+struct measureTimingStruct measureTiming; ///< Oggetto misura delle tempistiche.
+struct PistonStruct pistons[PIST_MAX]; ///< Vettore dei pistoni.
+struct PID PIDasse; ///< Oggeto PID.
 
 int function_taskIntegrity(void);
 int function_taskPID(void);
@@ -110,8 +110,34 @@ void setup () {
   Serial.begin(38400);
 
   SFCstate = 0;
-  // TODO Inizializzazione I/O
 
+  //Iinizializzazione I/O.
+  pinMode(2, INPUT);
+  pinMode(3, INPUT);
+  pinMode(4, INPUT);
+  pinMode(5, INPUT);
+  pinMode(6, INPUT);
+  pinMode(7, INPUT);
+  pinMode(8, INPUT);
+  pinMode(9, INPUT);
+  pinMode(10, INPUT);
+  pinMode(11, INPUT);
+  pinMode(12, INPUT);
+  pinMode(13, INPUT);
+  pinMode(14, INPUT);
+  pinMode(15, INPUT);
+  pinMode(16, INPUT);
+  pinMode(17, INPUT);
+
+  pinMode(18, OUTPUT);
+  pinMode(19, OUTPUT);
+  pinMode(20, OUTPUT);
+  pinMode(21, OUTPUT);
+  pinMode(22, OUTPUT);
+  pinMode(23, OUTPUT);
+  pinMode(24, OUTPUT);
+
+  //Inizializzazione pistoni.
   pistons[PIST_1M1].init(O_1M1,0,I_1B2,I_1B1);
   pistons[PIST_2M1].init(O_2M1,0,I_2B2,I_2B1);
   pistons[PIST_3MX].init(O_3M1,O_3M2,I_3B1,I_3B2);
