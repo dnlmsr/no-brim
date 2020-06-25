@@ -267,7 +267,23 @@ Lo schema elettropneumatico è stato realizzato con i seguenti componenti:
 
 \section{Elettronica}
 % PCB e quadro elettrico
-% Dimensionamenti
+\chapter{Parte Elettronica}
+
+\section{Descrizione circuiti e motivazione dei componenti}
+
+La parte elettronica, realizzata utilizzando Kicad e DesignSpark Eletrical, è stata suddivisa in 2 parti separate: 
+
+\begin{description}
+\item \textbf{PCB}. La prima parte è costituita da una serie di circuiti che permettono ad Arduino di comandare 4 elettrovalvole e due motori rispettivamente da 24V e da 230V.
+Nel caso specifico viene inserito tra l'output di Arduino e l'elettrovalvola, un Mosfet che fungerà da interuttore per alimentare e disalimentare l'elettrovalvola in questione o il motore.
+Per quanto riguarda le dimensioni del circuito stampato risultano contenute nonostante la quantità di dispositivi ad esso collegati, infatti il circuito integrea solamente la parte composta da una morsettiera con 10 connettori, dedicati ad ognuno degli ingressi necessari, i circuiti di comando e i morsetti di uscita.
+
+Ogni circuito di comando è composto un mosfet e un diodo: 
+\begin{description}
+\item La funzione del diodo in questo circuito è quella di proteggere il mosfet e l'uscita di Arduino da sovratensioni indesiderate provocate dagli avvolgimenti presenti nelle elettrovalvole e nei motori, in alcuni casi viene inserito anche pèer evitare le invesioni di tensione.
+Per quanto riguarda il circuito di comando per il motore monofase 230v, utilizzato per la sega, si è preferito introdurre anche un relè così da permettere di utilizzare un mosfet con corrente di sollecitazione minore e ridurre la tensione massima presente sulla scheda da 230v DC a "soli 24v" DC.
+\item Il mosfet è il cuore del circuito, infatti può essere visualizzato come un rubinetto che grazie ad una piccola sollecitazione(0-10mA) riesce a veicolare correnti di valore molto più alte (1-2A), nel nostro caso le correnti non superano i 2A, quest'ultimi date le correnti basse non necessitano della presenza di una qualsiasi aletta di raffreddamento. 
+\end{description}
 
 \section{Programmazione}
 % Schema a blocchi del sistema
