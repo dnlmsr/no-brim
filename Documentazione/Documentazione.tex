@@ -282,9 +282,14 @@ Ogni circuito di comando è composto un mosfet e un diodo:
 \begin{description}
 \item La funzione del diodo in questo circuito è quella di proteggere il mosfet e l'uscita di Arduino da sovratensioni indesiderate provocate dagli avvolgimenti presenti nelle elettrovalvole e nei motori, in alcuni casi viene inserito anche pèer evitare le invesioni di tensione.
 Per quanto riguarda il circuito di comando per il motore monofase 230v, utilizzato per la sega, si è preferito introdurre anche un relè così da permettere di utilizzare un mosfet con corrente di sollecitazione minore e ridurre la tensione massima presente sulla scheda da 230v DC a "soli 24v" DC.
-\item Il mosfet è il cuore del circuito, infatti può essere visualizzato come un rubinetto che grazie ad una piccola sollecitazione(0-10mA) riesce a veicolare correnti di valore molto più alte (1-2A), nel nostro caso le correnti non superano i 2A, quest'ultimi date le correnti basse non necessitano della presenza di una qualsiasi aletta di raffreddamento. 
+\item Il mosfet è il cuore del circuito, infatti può essere visualizzato come un rubinetto che grazie ad una piccola sollecitazione(0-10mA) riesce a veicolare correnti di valore molto più alte (1-7A), nel nostro caso le correnti non superano normalmente i 2A, quest'ultimi date le correnti basse non necessitano della presenza di una qualsiasi aletta di raffreddamento.
+Per quanto riguarda invece il motore reponsabile della movimentazione dell'asse lineare necessita di 7,7A come corrente di spunto
 \end{description}
+\item \textbf{Quadro}. La seconda parte del circuito è racchiusa in un quadretto di modeste dimensioni al quale viene data in ingresso una tensione trifase e in uscita dà due tensioni continue dal valore di 24V e 230V.
+Per permettere la conversione in tensione continua sono satti creati due circuiti di trasformazione separati e provvisti di interruttori magnetotermici differenziali per garantire la sicurezza elettrica del quadro, per garantire la continuità di lavoro i due circuiti provvisti di trasformatori sono stati collegati a fasi differenti.
+Il quadretto in qustione verrà in seguito collegata al connettore di terra dello stabilimento.
 
+\end{description}
 \section{Descrizione della componentistica}
 \subsection{Motori}
 \begin{description}
