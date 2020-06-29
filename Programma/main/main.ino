@@ -86,6 +86,7 @@ enum SFCstates {
                 SFC_CUT,
                 SFC_STOP_CUT,
                 SFC_EXPULSION,
+                SFC_END_EXPULSION,
 };
 
 struct TaskStruct tasks[TASK_MAX]; ///< Vettore dei task.
@@ -216,9 +217,9 @@ int function_taskSFC () {
     pistons[PIST_2M1].extend();
     pistons[PIST_1M1].retract();
     pistons[PIST_3MX].retract();
-    pistons[PIST_4M1].extend();
+    pistons[PIST_4M1].retract();
     analogWrite(O_M1, PIDasse.compute(V_EM1,millis()));
-    if (pistons[PIST_2M1].extensionState && pistons[PIST_1M1].retractionState && pistons[PIST_3MX].retractionState && pistons[PIST_2M1].extensionState && PIDasse.setPointReached){
+    if (pistons[PIST_2M1].extensionState && pistons[PIST_1M1].retractionState && pistons[PIST_3MX].retractionState && pistons[PIST_4M1].retractionState && PIDasse.setPointReached){
       SFCstate = SFC_MOVE_PREP;
     }
     break;
@@ -228,9 +229,8 @@ int function_taskSFC () {
      * La transizione richiede che la pinza movimentata sia in posizione.
      */
   case SFC_MOVE_PREP:
-    pistons[PIST_2M1].retract();
     pistons[PIST_1M1].extend();
-    if (pistons[PIST_2M1].retractionState && pistons[PIST_1M1].extensionState){
+    if (pistons[PIST_1M1].extensionState){
       SFCstate=SFC_MOVE_FRONT;
       PIDasse.setSetPoint(MIN_M1_VALUE);
     }
@@ -241,8 +241,9 @@ int function_taskSFC () {
      * la fine della sua corsa.
      */
   case SFC_MOVE_FRONT:
+    pistons[PIST_2M1].retract();
     analogWrite(O_M1, PIDasse.compute(V_EM1,millis()));
-    if (PIDasse.setPointReached){
+    if (pistons[PIST_2M1].retractionState && PIDasse.setPointReached){
       SFCstate=SFC_STOP_TUBE;
     }
     break;
@@ -286,10 +287,11 @@ int function_taskSFC () {
      * la fine della sua corsa.
      */
   case SFC_STOP_CUT:
-  pistons[PIST_3MX].retract();
-  if(pistons[PIST_3MX].retractionState){
-    SFCstate=SFC_EXPULSION;
-  }
+    digitalWrite(O_M2,0);
+    pistons[PIST_3MX].retract();
+    if(pistons[PIST_3MX].retractionState){
+      SFCstate=SFC_EXPULSION;
+    }
     break;
 
     /** Stato espulsione pezzo.
@@ -298,11 +300,17 @@ int function_taskSFC () {
      * a riposo.
      */
   case SFC_EXPULSION:
-  pistons[PIST_4M1].extend();
-  if(pistons[PIST_4M1].extensionState){
-    SFCstate=SFC_CALIBRATION;
-  }
+    pistons[PIST_4M1].extend();
+    if(pistons[PIST_4M1].extensionState)SFCstate=SFC_END_EXPULSION;
   break;
+
+  /** Stato fine espulsione pezzo.
+   * Il pezzo è stato espulso e 4M1 torna a riposo
+   */
+  case SFC_END_EXPULSION:
+    pistons[PIST_4M1].retract();
+    if(pistons[PIST_4M1].retractionState)SFCstate=SFC_CALIBRATION;
+    break;
   }
 }
 
