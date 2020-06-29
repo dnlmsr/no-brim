@@ -8,6 +8,8 @@
 \usepackage{siunitx}
 \usepackage{caption}
 \usepackage{subcaption}
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows}
 
 \DeclareSIUnit{\rpm}{rpm}
 \sisetup{range-phrase=\div}
@@ -346,7 +348,7 @@ La prima parte è costituita da una serie di circuiti che permettono ad Arduino 
   \includegraphics[width=0.7\textwidth]{src/img/circuito_comando.png}
   \caption{Circuito di comando}
   \label{fig:circuito}
-  \end{figure}
+\end{figure}
 Per quanto riguarda le dimensioni del circuito stampato risultano contenute nonostante la quantità di dispositivi ad esso collegati, infatti il circuito integra solamente la parte composta da una morsettiera con 10 connettori, dedicati ad ognuno degli ingressi necessari, i circuiti di comando e i morsetti di uscita. Ogni circuito di comando è composto un mosfet e un diodo: 
 \begin{description}
 \item[Diodo] La funzione del diodo in questo circuito è quella di proteggere il MOSFET e l'uscita di Arduino da sovratensioni indesiderate provocate dagli avvolgimenti presenti nelle elettrovalvole e nei motori, in alcuni casi viene inserito anche per evitare le invesioni di tensione. Per quanto riguarda il circuito di comando per il motore della lama monofase $\SI{230}{\volt}$, utilizzato per la sega, si è preferito introdurre anche un relè così da permettere di utilizzare un mosfet con corrente di sollecitazione minore e ridurre la tensione massima presente sulla scheda da $\SI{230}{\volt}$ AC a $\SI{24}{\volt}$ DC.
@@ -368,7 +370,7 @@ Sono stati utilizzati i seguenti componenti:
 
 \chapter{Programmazione}
 \section{Programma Arduino}
-L'intero sistema è basato sulla piattaforma open source Arduino MEGA, la quale gestisce l'intero funzionamento del sistema. Il programma che gira su Arduino è basato su un sistema a task e scheduler, ciò vuol dire che l'intero programma è suddiviso in piccoli sottoprogrammi (task) che vengono eseguiti ad una certa frequenza predefinita dallo scheduler il quale compito è appunto quello di eseguire questi programmi al momento giusto. Il programma dispone anche di un sistema per verificare se il sistema è real-time, ovvero che la capacità di calcolo del microcontrollore sia adeguata alla mole di calcoli richiesti dal programma. Questo sistema verifica appunto la saturazione della CPU.
+L'intero sistema è basato sulla piattaforma open source \emph{Arduino MEGA}, la quale gestisce l'intero funzionamento del sistema. Il programma che gira su Arduino è basato su un sistema a task e scheduler, ciò vuol dire che l'intero programma è suddiviso in piccoli sottoprogrammi (task) che vengono eseguiti ad una certa frequenza predefinita dallo scheduler il quale compito è appunto quello di eseguire questi programmi al momento giusto. Il programma dispone anche di un sistema per verificare se il sistema è real-time, ovvero che la capacità di calcolo del microcontrollore sia adeguata alla mole di calcoli richiesti dal programma. Questo sistema verifica appunto la saturazione della CPU.
 \subsection{SFC}
 Il programma per la movimentazione viene eseguito da un task adibito al corretto funzionamento dove si è cercato di replicare un sistema a stati.
 \begin{enumerate}
@@ -426,9 +428,40 @@ Eliminando $I(s)$ si ottiene:
 \end{equation}
 \subsection{Sistema completo}
 Dopo aver trovato la funzione che descrive il funzionamento del motore CC è necessario anche descrivere il funzionamento del controllore. Nel nostro caso è stato utilizzato un controllore PID. Lo schema a blocchi rappresenta il sistema completo:
-% Schema a blocchi del sistema
-A questo punto avendo la descrizione del sistema completo si è deciso di simulare l'intero sistema tramite l'utilizzo di Octave.
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[auto, node distance=3cm,>=latex']
+    \tikzstyle{block} = [draw, rectangle, 
+    minimum height=3em, minimum width=6em]
+    \tikzstyle{sum} = [draw, circle, node distance=1cm]
+    \tikzstyle{input} = [coordinate, node distance=1cm]
+    \tikzstyle{output} = [coordinate, node distance=2cm]
+    \tikzstyle{pinstyle} = [pin edge={to-,thin,black}]
+    
+    \node [input, name=input] {};
+    \node [sum, right of=input] (sum){};
+    \node [block, right of=sum] (controller) {Controller};
+    \node [block, right of=controller] (motore) {Motore};
+    \node [block, right of=motore] (conversione) {Conversione};
+    \node [output, right of=conversione] (output) {};
 
+    \draw [draw,->] (input) -- node {$S_p$} (sum);
+    \draw [->] (sum) -- node {$e$} (controller);
+    \draw [->] (controller) -- (motore);
+    \draw [->] (motore) -- (conversione);
+    \draw [->] (conversione) -- node [name=y] {$y$}(output);
+    \draw [->] (y) |- (5,-2) -| (sum);
+    \node [below left] at (sum) {$-$};
+  \end{tikzpicture}
+\end{figure}
+A questo punto avendo la descrizione del sistema completo si è deciso di simulare l'intero sistema tramite l'utilizzo di Octave. Il risultato sottostante si è ottenuto con $K_P=2$ e $K_I=K_D=0$.
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{src/img/pid_controller.eps}
+  \caption{Simulazione asse linare}
+  \label{fig:simulazione}
+\end{figure}
+Tarando quindi i giusti valori di PID è possibile ottenere un sistema teoricamente ottimale, ma che richiede comunque una prova sperimentale sul campo.
 \chapter{Utilizzo della macchina}
 
 \chapter{Sviluppi futuri}
