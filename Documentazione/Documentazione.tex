@@ -6,6 +6,8 @@
 \usepackage{float}
 \usepackage{pdfpages}
 \usepackage{siunitx}
+\usepackage{caption}
+\usepackage{subcaption}
 
 \DeclareSIUnit{\rpm}{rpm}
 \sisetup{range-phrase=\div}
@@ -32,14 +34,55 @@ La parte meccanica, realizzata su Inventor, è stata divisa in 2 gruppi principa
 \end{itemize}
 
 \subsection{Trasporto}
+\begin{figure}[H]
+  \centering
+  \begin{subfigure}[H]{0.45\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{src/img/trasporto_1.pdf}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[H]{0.45\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{src/img/trasporto_2.pdf}
+    \end{subfigure}
+    \caption{Gruppo trasporto}
+    \label{fig:vtcons}
+\end{figure}
 La prima parte si occupa del trasporto del tubo mediante un asse lineare ($l=\SI{300}{\mm}$) che sfrutta una trasmissione a vite a ricircolo di sfere, comandata da un motore elettrico, per spostare un pistone pneumatico (1M1), dove alla sua estremità è montata una lamiera che con la sua elasticità garantisce la corretta aderenza al tubo, sfruttando tutta la forza del pistone. Il pistone è stato collegato al pattino dell’asse lineare mediante una lamiera e una piastra. Dalla parte opposta all’asse, troviamo una lamiera a forma di “V” che garantisce il corretto scorrimento del tubo fino alla parte di taglio, grazie all’utilizzo di una rulliera costruita con dei cuscinetti a sfera.
 Poco più a destra dell’asse lineare si colloca un altro pistone (2M1) fisso a telaio che si occupa di bloccare il tubo con la stessa logica del primo, contro un supporto in materiale tenero per non danneggiare l’oggetto da lavorare.
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{src/img/pinza.pdf}
+  \caption{Pistone bloccaggio}
+  \label{fig:pinzaggio}
+\end{figure}
 All’estremità del telaio sono presenti delle lamiere che garantiscono il corretto ingresso ed uscita del tubo dalla parte di trasporto e dei sensori per controllare la posizione di quest’ultimo. Il telaio è stato realizzato mediante l’uso di tubolari quadrati in acciaio, dove sono stati fissati i supporti per le parti nominate in precedenza.
 
 \subsection{Taglio ed espulsione}
+\begin{figure}[H]
+  \centering
+  \begin{subfigure}[H]{0.45\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{src/img/taglio_1.pdf}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[H]{0.45\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{src/img/taglio_2.pdf}
+    \end{subfigure}
+    \caption{Gruppo taglio}
+    \label{fig:vtcons}
+\end{figure}
 La seconda parte si occupa del taglio e l’espulsione del tubo mediante l’uso di una sega circolare ($D=\SI{300}{\mm}$) messa in moto da un motore elettrico monofase ($P = \SI{1,5}{\kW}$, $n_{max}=\SI{2500}{\rpm}$), il tutto collegato con una trasmissione a cinghie piatte con rapporto di trasmissione $i=\num{0.5}$ che si occupa di moltiplicare i giri della puleggia operatrice per garantire un taglio ottimale, come consigliato da tabella. Il sottoassieme descritto è stato assemblato con un “telaietto” creato con dei tubolari quadrati in acciaio di piccole dimensioni per contenere il peso complessivo (motore, trasmissione, porta cuscinetto e lama) e vincolato ad un’estremità con 2 perni (che generano un effetto cerniera) che permettono la salita e la discesa di quest’ultimo mediante un pistone a doppio effetto (3MX). Per trasformare lo spostamento lineare del pistone in angolare dovuto alla rotazione attorno ai perni sono stati montati dei perni a forcella, collocati tra una piastra fissa e la base del pistone e tra l’estremità dello stelo e il telaietto, garantendo una buona spinta senza considerevoli perdite di forze. 
 
-Infine, troviamo l’espulsione del pezzo lavorato grazie all’utilizzo di un pistone pneumatico (4M1) dove all’estremità dello stelo è stata fissata una lamiera con delle prolunghe laterali che fanno scorrere il tubo su un piano d’appoggio (con la possibilità di essere allungato in base alla lunghezza del tubo desiderata) verso una caduta libera. Il telaio portante è stato realizzato mediante l’uso di tubolari quadrati in acciaio, dove sono stati fissati i supporti per le parti nominate in precedenza.
+Infine, troviamo l’espulsione del pezzo lavorato grazie all’utilizzo di un pistone pneumatico (4M1) dove all’estremità dello stelo è stata fissata una lamiera con delle prolunghe laterali che fanno scorrere il tubo su un piano d’appoggio (con la possibilità di essere allungato in base alla lunghezza del tubo desiderata) verso una caduta libera.
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{src/img/espulsione.pdf}
+  \caption{Pistone espulsione}
+  \label{fig:espulsione}
+\end{figure}
+Il telaio portante è stato realizzato mediante l’uso di tubolari quadrati in acciaio, dove sono stati fissati i supporti per le parti nominate in precedenza.
 
 \section{Calcoli di progetto}
 \subsection{Calcolo dei giri utili del motore}
@@ -115,7 +158,21 @@ Per il calcolo della potenza del motore, dopo aver trovato il numero di giri nec
 \item Le velocità di taglio, calcolate in precedenza sono state del tutto coerenti con le prove effettuate.
 \item La velocità di avanzamento, invece, ha soddisfatto le aspettative con un andamento lento e costante, senza imprimere troppa forza (circa \SI{50}{\N}) tra il tubo e la lama per evitare che quest'ultima si bloccasse.
   \end{itemize}
-\subsection{Dimensionamento della trasmissione}
+  \subsection{Dimensionamento della trasmissione}
+  \begin{figure}[H]
+    \centering
+    \begin{subfigure}[H]{0.45\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{src/img/sega_1.pdf}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[H]{0.45\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{src/img/sega_2.pdf}
+    \end{subfigure}
+    \caption{Gruppo trasmissione}
+    \label{fig:vtcons}
+\end{figure}
 Le cinghie sono organi flessibili impiegati nella trasmissione di potenza da una puleggia motrice a una condotta, montate su alberi disposti ad una certa distanza (interasse). Le cinghie possono appartenere a due gruppi distinti: cinghie di tipo convenzionale e cinghie sincrone.
 Le cinghie di tipo convenzionale trasmettono il moto sfruttando l’aderenza (attrito) con il profilo esterno della puleggia. In questo caso possono verificarsi scorrimenti fra la cinghia e la puleggia durante il moto.
 Le cinghie sincrone trasmettono il moto tramite l’ingranamento dei denti della cinghia con quelli della puleggia. Non sono soggette a scorrimento e necessitano di un precarico molto modesto.
@@ -211,21 +268,29 @@ La larghezza della cinghia è stata scelta in riferimento ai valori dati dalla s
 
 \subsubsection{Calcolo dello spessore della cinghia $s$}
 Dalla seguente tabella ricavo lo spessore $s$ della cinghia in base al materiale scelto in precedenza. In questo caso \SI{6}{\mm}.
-\begin{figure}[H] % per inserire l'immagine subito sotto il testo
-    \centering
-    \includegraphics[width=1\textwidth]{src/img/tabella_cinghie.png}
-    \caption{Parametri consigliati per vari tipi di cinghie}
-    \label{fig:cinghie}
-\end{figure}
-
+\begin{table}[H]
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+\multicolumn{5}{|c|}{\textbf{Campo applicazione per cinghie piatte}} \\ \hline
+\textit{\textbf{\begin{tabular}[c]{@{}c@{}}Tipo di cinghia \\ e materiale\end{tabular}}} & \textit{\textbf{Costruzione}} & \textit{\textbf{\begin{tabular}[c]{@{}c@{}}Potenza Max \\ $[\si{\kW}]$\end{tabular}}} & \textit{\textbf{\begin{tabular}[c]{@{}c@{}}Velocità Max \\ $[\si{\m\per\s}]$\end{tabular}}} & \textit{\textbf{\begin{tabular}[c]{@{}c@{}}Spessore cinghia s \\ $[\si{\mm}]$\end{tabular}}} \\ \hline
+Cuoio & \begin{tabular}[c]{@{}c@{}}- Semplice\\ - Doppia\\ - Triplice\end{tabular} & \begin{tabular}[c]{@{}c@{}}750\\ 500\\ 1500\end{tabular} & \begin{tabular}[c]{@{}c@{}}40\\ 30\\ 25\end{tabular} & \begin{tabular}[c]{@{}c@{}}4 - 6\\ 7 - 9\\ 11 - 14\end{tabular} \\ \hline
+\begin{tabular}[c]{@{}c@{}}Componente:\\ - Nylon\\ - Poliestere\end{tabular} & \begin{tabular}[c]{@{}c@{}}- Lamina in gomma\\ - Plastici\end{tabular} & 3500 & 40 & 0,5 - 6 \\ \hline
+\begin{tabular}[c]{@{}c@{}}Composita:\\ - Gomma\\ - Tessile\end{tabular} & \begin{tabular}[c]{@{}c@{}}- Tessuti medi\\ - Tessuti pesanti\end{tabular} & \begin{tabular}[c]{@{}c@{}}750\\ 1500\end{tabular} & \begin{tabular}[c]{@{}c@{}}40\\ 40\end{tabular} & \begin{tabular}[c]{@{}c@{}}6 - 20\\ 6 - 20\end{tabular} \\ \hline
+\begin{tabular}[c]{@{}c@{}}Cotone, balata \\ e altre fibre tessili\end{tabular} & \begin{tabular}[c]{@{}c@{}}- Multistrato\\ - Unico strato\end{tabular} & 1500 & 30 & 4 - 20 \\ \hline
+\begin{tabular}[c]{@{}c@{}}In gomma e plastici \\ per alte velocità\end{tabular} & - Unico strato & 50 & 70 & 0,5 - 2 \\ \hline
+\end{tabular}%
+}
+\caption{Parametri consigliati per vari tipi di cinghie}
+\end{table}
 \subsubsection{Calcolo della larghezza della puleggia $b$}
 \begin{equation}
-  b = a\num{1,15}\approx\SI{30}{\mm}
+  b = \num{1,15}\cdot a\approx\SI{30}{\mm}
 \end{equation}
 \subsubsection{Calcolo della bombatura della puleggia $h$}
 Le pulegge per cinghie piatte vengono costruite con profilo esterno leggermente bombato per ottenere la stabilità della cinghia sulla corona. I materiali più indicati sono l’alluminio, per il peso contenuto, o la ghisa per piccole serie.
 \begin{equation}
- h=b\num{0,006}=\SI{0.186}{\mm}
+ h=\num{0,006}\cdot b=\SI{0.186}{\mm}
 \end{equation}
 \section{Schema elettropneumatico}
 \subsection{Scelta dei componenti}
