@@ -285,7 +285,7 @@ La prima parte è costituita da una serie di circuiti che permettono ad Arduino 
 Per quanto riguarda le dimensioni del circuito stampato risultano contenute nonostante la quantità di dispositivi ad esso collegati, infatti il circuito integra solamente la parte composta da una morsettiera con 10 connettori, dedicati ad ognuno degli ingressi necessari, i circuiti di comando e i morsetti di uscita. Ogni circuito di comando è composto un mosfet e un diodo: 
 \begin{description}
 \item[Diodo] La funzione del diodo in questo circuito è quella di proteggere il MOSFET e l'uscita di Arduino da sovratensioni indesiderate provocate dagli avvolgimenti presenti nelle elettrovalvole e nei motori, in alcuni casi viene inserito anche per evitare le invesioni di tensione. Per quanto riguarda il circuito di comando per il motore della lama monofase $\SI{230}{\volt}$, utilizzato per la sega, si è preferito introdurre anche un relè così da permettere di utilizzare un mosfet con corrente di sollecitazione minore e ridurre la tensione massima presente sulla scheda da $\SI{230}{\volt}$ AC a $\SI{24}{\volt}$ DC.
-\item[MOSFET] È il cuore del circuito infatti, grazie ad una piccola sollecitazione ($\SIrange{0}{10}{\milli\ampere}$) riesce a veicolare correnti di valore molto più alte ($\SIrange{1}{7}{\ampere}$), nel nostro caso le correnti non superano normalmente i $\SI{2}{\ampere}$ quindi, date le correnti basse non necessitano della presenza di alette di raffreddamento. Per quanto riguarda invece il motore reponsabile della movimentazione dell'asse lineare necessita di $\SI{7,7}{\ampere}$ come corrente di spunto.
+\item[MOSFET] È il cuore del circuito infatti, grazie ad una piccola sollecitazione ($\SIrange{0}{10}{\milli\ampere}$) riesce a veicolare correnti di valore molto più alte ($\SIrange{1}{7}{\ampere}$), nel nostro caso le correnti non superano normalmente i $\SI{2}{\ampere}$ quindi, date le correnti basse non necessitano della presenza di alette di raffreddamento. Per quanto riguarda invece il motore responsabile della movimentazione dell'asse lineare necessita di $\SI{7,7}{\ampere}$ come corrente di spunto.
 \end{description}
 \section{Quadro}
 La seconda parte del circuito è racchiusa in un quadretto di modeste dimensioni al quale viene data in ingresso una tensione monofase $\SI{230}{\volt}$ e in uscita due tensioni continue dal valore di $\SI{24}{\volt}$ e $\SI{12}{\volt}$.
@@ -294,11 +294,11 @@ Il quadretto in qustione verrà in seguito collegato al connettore di terra dell
 \section{Descrizione della componentistica}
 Sono stati utilizzati i seguenti componenti:
 \begin{itemize}
-\item Motore dell'asse lineare;
-\item Motore della sega circolare;
-\item Elettrovalvola 4/2 di Fluidmec;
-\item Elettrovalvola 5/3 di Festo;
-\item Elettrovalvola 3/2 di Schmieranlagen;
+\item Motore dell'asse lineare: un motore brushless di Pamoco con dati di targa di $\SI{24}{\volt}$ e corrente di spunto di $\SI{7,7}{\ampere}$;
+\item Motore della sega circolare: un motore di Bonfiglioli con dati di targa di $\SI{230}{\volt}$ monofase e corrente di spunto di $\SI{2,4}{\ampere}$;;
+\item Elettrovalvola 4/2 di Fluidmec con pilotaggio elettrico su entrambi i lati con dati di targa di $\SI{24}{\volt}$ e corrente di spunto di $\SI{0,8}{\ampere}$; 
+\item Elettrovalvola 5/3 di Festo a centri chiusi con pilotaggio elettrico su entrambi i lati con dati di targa di $\SI{24}{\volt}$ e corrente di spunto di $\SI{0,5}{\ampere}$;
+\item Elettrovalvola 3/2 di Schmieranlagen con pilotaggio elettrico a sinistra e ritorno a molla a destra con dati di targa di $\SI{24}{\volt}$ e corrente di spunto di $\SI{0,8}{\ampere}$;
 \end{itemize} 
 
 \chapter{Programmazione}
