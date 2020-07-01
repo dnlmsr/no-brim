@@ -24,7 +24,7 @@
 \tableofcontents
 
 \chapter{Introduzione}
-no-brim è il progetto di una segatrice per tubi in PVC o altri materiali plastici, creato per il corso di Alta Formazione Professionale. Alla base di questo progetto, è presente la progettazione meccanica, elettronica e di programmazione di un macchinario semiautomatico per il taglio di lunghezza variabile di tubi mediante una discreta varietà di componenti (motori elettrici, assi, pistoni pneumatici, elettrovalvole, trasmissione a cinghia e lama circolare) che operano simultaneamente per realizzare il prodotto finale. Le motivazioni che ci hanno proiettato su questa tipologia di progetto derivano dal desiderio di mettere in atto le nozioni apprese durante il primo e secondo praticantato, dove ognuno dei 3 componenti del gruppo ha avuto modo di confrontansi con il mondo del lavoro e di migliorare e accrescere le sue conoscenze nei vari ambiti in cui ha potuto lavorare, come la creazione di sistemi di trasmissione del moto o la programmazione.
+no-brim è il progetto di una segatrice per tubi in PVC o altri materiali plastici, creato per il corso di Alta Formazione Professionale. Alla base di questo progetto, è presente la progettazione meccanica, elettronica e di programmazione di un macchinario semiautomatico per il taglio di lunghezza variabile di tubi mediante una discreta varietà di componenti (motori elettrici, assi, pistoni pneumatici, elettrovalvole, trasmissione a cinghia e lama circolare) che operano simultaneamente per realizzare il prodotto finale. Le motivazioni che ci hanno proiettato su questa tipologia di progetto derivano dal desiderio di mettere in atto le nozioni apprese durante il primo e secondo praticantato, dove ognuno dei 3 componenti del gruppo ha avuto modo di confrontarsi con il mondo del lavoro e di migliorare e accrescere le sue conoscenze nei vari ambiti in cui ha potuto lavorare, come la creazione di sistemi di trasmissione del moto o la programmazione.
 \chapter{Meccanica}
 
 \section{Descrizione macchina e motivazione dei componenti}
@@ -53,7 +53,7 @@ La prima parte si occupa del trasporto del tubo mediante un asse lineare ($l=\SI
 Poco più a destra dell’asse lineare si colloca un altro pistone (2M1) fisso a telaio che si occupa di bloccare il tubo con la stessa logica del primo, contro un supporto in materiale tenero per non danneggiare l’oggetto da lavorare.
 \begin{figure}[H]
   \centering
-  \includegraphics[width=\textwidth]{src/img/pinza.pdf}
+  \includegraphics[width=0.7\textwidth]{src/img/pinza.pdf}
   \caption{Pistone bloccaggio}
   \label{fig:pinzaggio}
 \end{figure}
@@ -74,12 +74,12 @@ All’estremità del telaio sono presenti delle lamiere che garantiscono il corr
     \caption{Gruppo taglio}
     \label{fig:vtcons}
 \end{figure}
-La seconda parte si occupa del taglio e l’espulsione del tubo mediante l’uso di una sega circolare ($D=\SI{300}{\mm}$) messa in moto da un motore elettrico monofase ($P = \SI{1,5}{\kW}$, $n_{max}=\SI{2500}{\rpm}$), il tutto collegato con una trasmissione a cinghie piatte con rapporto di trasmissione $i=\num{0.5}$ che si occupa di moltiplicare i giri della puleggia operatrice per garantire un taglio ottimale, come consigliato da tabella. Il sottoassieme descritto è stato assemblato con un “telaietto” creato con dei tubolari quadrati in acciaio di piccole dimensioni per contenere il peso complessivo (motore, trasmissione, porta cuscinetto e lama) e vincolato ad un’estremità con 2 perni (che generano un effetto cerniera) che permettono la salita e la discesa di quest’ultimo mediante un pistone a doppio effetto (3MX). Per trasformare lo spostamento lineare del pistone in angolare dovuto alla rotazione attorno ai perni sono stati montati dei perni a forcella, collocati tra una piastra fissa e la base del pistone e tra l’estremità dello stelo e il telaietto, garantendo una buona spinta senza considerevoli perdite di forze. 
+La seconda parte si occupa del taglio e l’espulsione del tubo mediante l’uso di una sega circolare ($D=\SI{300}{\mm}$) messa in moto da un motore elettrico monofase ($P = \SI{1,5}{\kW}$, $n_{max}=\SI{2500}{\rpm}$), il tutto collegato con una trasmissione a cinghie piatte con rapporto di trasmissione $i=\num{0.5}$ che si occupa di moltiplicare i giri della puleggia operatrice per garantire un taglio ottimale, come consigliato da tabella. Il sotto-assieme descritto è stato assemblato con un “telaietto” creato con dei tubolari quadrati in acciaio di piccole dimensioni per contenere il peso complessivo (motore, trasmissione, porta cuscinetto e lama) e vincolato ad un’estremità con 2 perni (che generano un effetto cerniera) che permettono la salita e la discesa di quest’ultimo mediante un pistone a doppio effetto (3MX). Per trasformare lo spostamento lineare del pistone in angolare dovuto alla rotazione attorno ai perni sono stati montati dei perni a forcella, collocati tra una piastra fissa e la base del pistone e tra l’estremità dello stelo e il telaietto, garantendo una buona spinta senza considerevoli perdite di forze. 
 
 Infine, troviamo l’espulsione del pezzo lavorato grazie all’utilizzo di un pistone pneumatico (4M1) dove all’estremità dello stelo è stata fissata una lamiera con delle prolunghe laterali che fanno scorrere il tubo su un piano d’appoggio (con la possibilità di essere allungato in base alla lunghezza del tubo desiderata) verso una caduta libera.
 \begin{figure}[H]
   \centering
-  \includegraphics[width=\textwidth]{src/img/espulsione.pdf}
+  \includegraphics[width=0.7\textwidth]{src/img/espulsione.pdf}
   \caption{Pistone espulsione}
   \label{fig:espulsione}
 \end{figure}
@@ -280,7 +280,8 @@ Dalla seguente tabella ricavo lo spessore $s$ della cinghia in base al materiale
 Cuoio & \begin{tabular}[c]{@{}c@{}}- Semplice\\ - Doppia\\ - Triplice\end{tabular} & \begin{tabular}[c]{@{}c@{}}750\\ 500\\ 1500\end{tabular} & \begin{tabular}[c]{@{}c@{}}40\\ 30\\ 25\end{tabular} & \begin{tabular}[c]{@{}c@{}}4 - 6\\ 7 - 9\\ 11 - 14\end{tabular} \\ \hline
 \begin{tabular}[c]{@{}c@{}}Componente:\\ - Nylon\\ - Poliestere\end{tabular} & \begin{tabular}[c]{@{}c@{}}- Lamina in gomma\\ - Plastici\end{tabular} & 3500 & 40 & 0,5 - 6 \\ \hline
 \begin{tabular}[c]{@{}c@{}}Composita:\\ - Gomma\\ - Tessile\end{tabular} & \begin{tabular}[c]{@{}c@{}}- Tessuti medi\\ - Tessuti pesanti\end{tabular} & \begin{tabular}[c]{@{}c@{}}750\\ 1500\end{tabular} & \begin{tabular}[c]{@{}c@{}}40\\ 40\end{tabular} & \begin{tabular}[c]{@{}c@{}}6 - 20\\ 6 - 20\end{tabular} \\ \hline
-\begin{tabular}[c]{@{}c@{}}Cotone, balata \\ e altre fibre tessili\end{tabular} & \begin{tabular}[c]{@{}c@{}}- Multistrato\\ - Unico strato\end{tabular} & 1500 & 30 & 4 - 20 \\ \hline
+  \begin{tabular}[c]{@{}c@{}}Cotone, balata \\ e altre fibre tessili\end{tabular} & \begin{tabular}[c]{@{}c@{}}- Multistrato\\ - Unico strato\end{tabular} & 1500 & 30 & 4 -
+                                                                                                                                                                         20 \\ \hline
 \begin{tabular}[c]{@{}c@{}}In gomma e plastici \\ per alte velocità\end{tabular} & - Unico strato & 50 & 70 & 0,5 - 2 \\ \hline
 \end{tabular}%
 }
@@ -295,9 +296,9 @@ Le pulegge per cinghie piatte vengono costruite con profilo esterno leggermente 
 \begin{equation}
  h=\num{0,006}\cdot b=\SI{0.186}{\mm}
 \end{equation}
-\section{Schema elettropneumatico}
+\section{Schema elettro-pneumatico}
 \subsection{Scelta dei componenti}
-Lo schema elettropneumatico è stato realizzato con i seguenti componenti:
+Lo schema elettro-pneumatico è stato realizzato con i seguenti componenti:
 \begin{description}
 \item[Compressore] Si occupa di accumulare e innalzare la pressione dell’aria all’interno del suo serbatoio per alimentare il circuito pneumatico;
 \item[Gruppo trattamento aria] Composta da filtro di scarico manuale, un riduttore di pressione variabile, un manometro e una valvola di sicurezza (quasi sempre inclusa nei gruppi trattamento aria industriali per togliere aria al sistema in caso di emergenza);
@@ -323,7 +324,7 @@ Lo schema elettropneumatico è stato realizzato con i seguenti componenti:
 \begin{tabular}{|l|c|}
   \hline
   {\textbf{Componenti}} & \textbf{Quantità} \\ \hline
-  Pistone sing. effetto & 3 \\ \hline
+  Pistone singolo effetto & 3 \\ \hline
   Pistone doppio effetto & 1 \\ \hline
   Elettrovalvola 3/2 nc con ritorno a molla & 3 \\ \hline
   Elettrovalvola 5/3 centri chiusi con ritorno a molla & 1 \\ \hline
@@ -337,28 +338,28 @@ Lo schema elettropneumatico è stato realizzato con i seguenti componenti:
 \chapter{Elettronica}
 
 \section{Descrizione circuiti e motivazione dei componenti}
-La parte elettronica, realizzata utilizzando Kicad e DesignSpark Eletrical, è stata suddivisa in 2 parti separate:
+La parte elettronica, realizzata utilizzando KiCad e DesignSpark Eletrical, è stata suddivisa in 2 parti separate:
 \begin{itemize}
 \item PCB
 \item Quadro
 \end{itemize}
 \section{PCB}
-La prima parte è costituita da una serie di circuiti che permettono ad Arduino di comandare 4 elettrovalvole e due motori rispettivamente da 24V e da 230V. Nel caso specifico viene inserito tra l'output di Arduino e l'elettrovalvola, un MOSFET che fungerà da interuttore per alimentare e disalimentare l'elettrovalvola in questione o il motore.
+La prima parte è costituita da una serie di circuiti che permettono ad Arduino di comandare 4 elettrovalvole e due motori rispettivamente da 24V e da 230V. Nel caso specifico viene inserito tra l'output di Arduino e l'elettrovalvola, un MOSFET che fungerà da interruttore per alimentare e disalimentare l'elettrovalvola in questione o il motore.
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.7\textwidth]{src/img/circuito_comando.png}
   \caption{Circuito di comando}
   \label{fig:circuito}
 \end{figure}
-Per quanto riguarda le dimensioni del circuito stampato risultano contenute nonostante la quantità di dispositivi ad esso collegati, infatti il circuito integra solamente la parte composta da una morsettiera con 10 connettori, dedicati ad ognuno degli ingressi necessari, i circuiti di comando e i morsetti di uscita. Ogni circuito di comando è composto un mosfet e un diodo: 
+Per quanto riguarda le dimensioni del circuito stampato risultano contenute nonostante la quantità di dispositivi ad esso collegati, infatti il circuito integra solamente la parte composta da una morsettiera con 10 connettori, dedicati ad ognuno degli ingressi necessari, i circuiti di comando e i morsetti di uscita. Ogni circuito di comando è composto un MOSFET e un diodo: 
 \begin{description}
-\item[Diodo] La funzione del diodo in questo circuito è quella di proteggere il MOSFET e l'uscita di Arduino da sovratensioni indesiderate provocate dagli avvolgimenti presenti nelle elettrovalvole e nei motori, in alcuni casi viene inserito anche per evitare le invesioni di tensione. Per quanto riguarda il circuito di comando per il motore della lama monofase $\SI{230}{\volt}$, utilizzato per la sega, si è preferito introdurre anche un relè così da permettere di utilizzare un mosfet con corrente di sollecitazione minore e ridurre la tensione massima presente sulla scheda da $\SI{230}{\volt}$ AC a $\SI{24}{\volt}$ DC.
+\item[Diodo] La funzione del diodo in questo circuito è quella di proteggere il MOSFET e l'uscita di Arduino da sovratensioni indesiderate provocate dagli avvolgimenti presenti nelle elettrovalvole e nei motori, in alcuni casi viene inserito anche per evitare le inversioni di tensione. Per quanto riguarda il circuito di comando per il motore della lama monofase $\SI{230}{\volt}$, utilizzato per la sega, si è preferito introdurre anche un relè così da permettere di utilizzare un MOSFET con corrente di sollecitazione minore e ridurre la tensione massima presente sulla scheda da $\SI{230}{\volt}$ AC a $\SI{24}{\volt}$ DC.
 \item[MOSFET] È il cuore del circuito infatti, grazie ad una piccola sollecitazione ($\SIrange{0}{10}{\milli\ampere}$) riesce a veicolare correnti di valore molto più alte ($\SIrange{1}{7}{\ampere}$), nel nostro caso le correnti non superano normalmente i $\SI{2}{\ampere}$ quindi, date le correnti basse non necessitano della presenza di alette di raffreddamento. Per quanto riguarda invece il motore responsabile della movimentazione dell'asse lineare necessita di $\SI{7,7}{\ampere}$ come corrente di spunto.
 \end{description}
 \section{Quadro}
 La seconda parte del circuito è racchiusa in un quadretto di modeste dimensioni al quale viene data in ingresso una tensione monofase $\SI{230}{\volt}$ e in uscita due tensioni continue dal valore di $\SI{24}{\volt}$ e $\SI{12}{\volt}$.
 Per permettere la conversione in tensione continua sono stati creati due circuiti di trasformazione separati e provvisti di interruttori magnetotermici differenziali per garantire la sicurezza elettrica del quadro.
-Il quadretto in qustione verrà in seguito collegato al connettore di terra dello stabilimento.
+Il quadretto in questione verrà in seguito collegato al connettore di terra dello stabilimento.
 \section{Descrizione della componentistica}
 Sono stati utilizzati i seguenti componenti:
 \begin{itemize}
@@ -412,14 +413,14 @@ Passo vite              & $p$                                & \SI{5}{\mm}      
 Per poter studiare il motore si fa uso delle formule del motore in corrente continua:
 \begin{equation}
   \begin{cases}
-    Ri(t)+K\omega(t)=Vi(t)\\
-    J\dot \omega(t)=Ki(t)    
+    Ri(t)+K\omega(t)=V(t)\\
+    J\dot \omega(t)=Ki(t)
   \end{cases}
 \end{equation}
 Si decide quindi di portare l'intero sistema nel dominio di Laplace:
 \begin{equation}
   \begin{cases}
-    RI(s)+K\omega(s)=VI(s)\\
+    RI(s)+K\omega(s)=V(s)\\
     Js\omega(s)=KI(s)    
   \end{cases}
 \end{equation}
@@ -459,19 +460,17 @@ A questo punto avendo la descrizione del sistema completo si è deciso di simula
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.7\textwidth]{src/img/pid_controller.eps}
-  \caption{Simulazione asse linare}
+  \caption{Simulazione asse lineare}
   \label{fig:simulazione}
 \end{figure}
 Tarando quindi i giusti valori di PID è possibile ottenere un sistema teoricamente ottimale, ma che richiede comunque una prova sperimentale sul campo.
-\chapter{Utilizzo della macchina}
-
 
 \chapter{Sviluppi futuri}
 \section{Sviluppi ambito elettronico}
   Uno sviluppo futuro per questo progetto consisterebbe nella progettazione e realizzazione di un circuito di sicurezza implementando barriere o cancelli che impediscano agli operatori di infortunarsi a causa delle diverse parti in movimento presenti nel macchinario.
 
 \section{Sviluppi ambito programmazione} 
-  Un' implementazione futura potrebbe consistere nella creazione di un applicativo di visione, magari per il controllo della qualità  la deformazione del tubo dopo il taglio.
+Sono da implementare l'interfacciamento con l'utente tramite l'utilizzo di un encoder e di un display LCD, nonché la comunicazione seriale con un PC per effettuare un debugging del sistema se necessario. Un'implementazione futura potrebbe consistere nella creazione di un applicativo di visione, magari per il controllo della qualità la deformazione del tubo dopo il taglio.
   
 \section{Sviluppi ambito meccanico}  
   Un altra possibile modifica al progetto potrebbe consistere nella creazione di un sistema mobile per quanto riguarda la struttura contenente la sega circolare così da permettere anche quest'ultima di muoversi al posto della sola movimentazione del tubo, ottimizzando così le tempistiche dedicate al taglio.
@@ -481,6 +480,7 @@ Tarando quindi i giusti valori di PID è possibile ottenere un sistema teoricame
 \section{Software utilizzati}
 \begin{description}
 \item[Autodesk Inventor]Per la realizzazione e la rappresentazione dei pezzi meccanici
+  \item[Fluidsim]Per la progettazione del sistema pneumatico
 \item[KiCad]Per la progettazione del PCB
 \item[Arduino]Per la programmazione del sistema
 \item[Octave]Per la simulazione del sistema
@@ -490,4 +490,5 @@ Tarando quindi i giusti valori di PID è possibile ottenere un sistema teoricame
 \includepdf[pages=-,angle=90]{src/Tavole/trasporto.pdf}
 \includepdf[pages=-,angle=90]{src/Tavole/taglio_1.pdf}
 \includepdf[pages=-,angle=90]{src/Tavole/trasmissione.pdf}
+\includepdf[pages=-]{src/img/impianto_elettropneumatico.pdf}
 \end{document}
